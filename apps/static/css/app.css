@@ -1,0 +1,30 @@
+body {
+  background-color: whitesmoke;
+}
+
+#mainNavbar .nav-link {
+  color: rgb(112, 112, 113);
+}
+
+#mainNavbar .nav-link:hover {
+  color: rgb(72, 128, 139);
+  font-weight: 500;
+}
+
+#headingSection {
+  margin-top: 125px;
+  margin-bottom: 25px;
+}
+
+#headingSection h2 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+#reportDisplay iframe {
+  height: 1000px;
+}
+
+.blurb {
+  line-height: 2;
+}

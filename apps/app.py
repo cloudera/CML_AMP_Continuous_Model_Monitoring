@@ -39,18 +39,30 @@
 # ###########################################################################
 
 import os
-from flask import Flask
+from flask import Flask, render_template, jsonify
 
-from src.utils import find_latest_report
+# from src.utils import find_latest_report
 
-app = Flask(__name__, static_folder="apps/reports", static_url_path="")
+app = Flask(__name__)
+
+
+report_dates = [
+    "2013-11-01_2014-12-01",
+    "2014-12-01_2015-01-01",
+    "2015-01-01_2015-02-01",
+]
 
 
 @app.route("/")
-def report():
-    latest_report = find_latest_report(report_dir="apps/reports/")
-    return app.send_static_file(latest_report)
+def hello_world():
+    return render_template("index.html")
+
+
+@app.route("/get_report_dates", methods=["GET"])
+def get_report_dates():
+    return jsonify(report_dates)
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=os.environ.get("CDSW_READONLY_PORT"))
+    app.run(host="127.0.0.1", debug=True)
+    # app.run(host="127.0.0.1", port=os.environ.get("CDSW_READONLY_PORT"))
