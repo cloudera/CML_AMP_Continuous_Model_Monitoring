@@ -41,16 +41,12 @@
 import os
 from flask import Flask, render_template, jsonify
 
-# from src.utils import find_latest_report
 
+STATIC_PATH = "apps/static"
+TEMPLATE_PATH = "apps/templates"
+
+app = Flask(__name__, static_folder=STATIC_PATH, template_folder=TEMPLATE_PATH)
 app = Flask(__name__)
-
-
-report_dates = [
-    "2013-11-01_2014-12-01",
-    "2014-12-01_2015-01-01",
-    "2015-01-01_2015-02-01",
-]
 
 
 @app.route("/")
@@ -60,6 +56,7 @@ def hello_world():
 
 @app.route("/get_report_dates", methods=["GET"])
 def get_report_dates():
+    report_dates = os.listdir(os.path.join(STATIC_PATH, "reports"))
     return jsonify(report_dates)
 
 
