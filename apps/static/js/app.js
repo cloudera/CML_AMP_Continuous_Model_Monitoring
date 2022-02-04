@@ -26,7 +26,7 @@ const populateDateSelect = () => {
         }
         dateSelect.appendChild(newOption)
     }
-    console.log('I FINISHED POPULATING DATE SELECTOR')
+    console.log('FINISHED POPULATING DATE SELECTOR')
 }
 
 // async-await to setup dashboard
@@ -44,14 +44,14 @@ setupDashboard()
 
 // update reportDisplay on new date selection event
 dateSelect.addEventListener('change', function (event){
-    currentDateSelection = event.target.value
+    const currentDateSelection = event.target.value
     const currentReportSelection = getActiveReport()
     updateReportUrl(currentDateSelection, currentReportSelection)
 })
 
 // update reportDisplay on new report selection event
 document.querySelector('.nav-pills').addEventListener('click', function (event) {
-    currentReportSelection = event.target.value
+    const currentReportSelection = event.target.value
     const currentDateSelection = getActiveDate()
     updateReportUrl(currentDateSelection, currentReportSelection)
 })
@@ -70,7 +70,7 @@ const getActiveReport  = () => {
 // helper function that updates iframe source
 // this gets called inside each eventListener
 const updateReportUrl = function (date, report) {
-    console.log('I UPDATED THE REPORT URL SRC.')
+    console.log('UPDATED THE REPORT URL SRC.')
     const reportUrl = `static/reports/${date}/${report}`
     document.querySelector('div#reportDisplay iframe').src = reportUrl;
 }
