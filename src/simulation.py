@@ -144,7 +144,7 @@ class Simulation:
         ):
 
             formatted_date_range = " <--> ".join(
-                [ts.strftime("%Y-%m-%d") for ts in date_range]
+                [ts.strftime("%m-%d-%Y") for ts in date_range]
             )
 
             logger.info(
@@ -432,7 +432,7 @@ class Simulation:
 
         report_dir = os.path.join(
             "apps/static/reports/",
-            f'{current_date_range[0].strftime("%Y-%m-%d")}_{current_date_range[1].strftime("%Y-%m-%d")}',
+            f'{current_date_range[0].strftime("%m-%d-%Y")}_{current_date_range[1].strftime("%m-%d-%Y")}',
         )
         os.makedirs(report_dir, exist_ok=True)
 
