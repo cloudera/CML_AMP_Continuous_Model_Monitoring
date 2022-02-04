@@ -173,7 +173,7 @@ class Simulation:
                 metrics_df.predictionUuid.isin(formatted_metadata[0])
             ]
 
-            self.build_evidently_report(
+            self.build_evidently_reports(
                 reference_df=train_metrics_df,
                 current_df=new_sold_metrics_df,
                 current_date_range=date_range,
@@ -397,13 +397,11 @@ class Simulation:
         ].rename(columns={col: col.split(".")[-1] for col in metrics.columns})
 
     @staticmethod
-    def build_evidently_report(reference_df, current_df, current_date_range):
+    def build_evidently_reports(reference_df, current_df, current_date_range):
         """
         Constructs a set of Evidently.ai monitoring reports (Data Drift, Numerical
         Target Drift, and Regression Performance) provided a reference and current
-        dataframe. Save the HTML report to disk for use as an Application.
-
-        Reports are named by the end date of the provided date range.
+        dataframe. Save the HTML reports to disk for use in an Application.
 
         Args:
             reference_df (pd.Dataframe)
@@ -432,29 +430,36 @@ class Simulation:
             "datetime": None,
         }
 
-        dashboard = Dashboard(
-            tabs=[DataDriftTab, NumTargetDriftTab, RegressionPerformanceTab]
+        report_dir = os.path.join(
+            "apps/static/reports/",
+            f'{current_date_range[0].strftime("%Y-%m-%d")}_{current_date_range[1].strftime("%Y-%m-%d")}',
         )
-
-        dashboard.calculate(
-            reference_data=scale_prices(reference_df)
-            .sample(n=len(current_df), random_state=42)
-            .set_index("date_sold", drop=True)
-            .sort_index()
-            .round(2),
-            current_data=scale_prices(current_df)
-            .set_index("date_sold", drop=True)
-            .sort_index()
-            .round(2),
-            column_mapping=column_map,
-        )
-
-        report_dir = "apps/reports/"
-        report_path = os.path.join(
-            report_dir,
-            f'{current_date_range[1].strftime("%Y-%m-%d")}_price_regressor.html',
-        )
-
         os.makedirs(report_dir, exist_ok=True)
-        dashboard.save(report_path)
-        logger.info(f"Generated new Evidently report: {report_path}")
+
+        reports = [
+            ("data_drift", DataDriftTab),
+            ("num_target_drift", NumTargetDriftTab),
+            ("reg_performance", RegressionPerformanceTab),
+        ]
+
+        for report_name, tab in reports:
+
+            dashboard = Dashboard(tabs=[tab])
+
+            dashboard.calculate(
+                reference_data=scale_prices(reference_df)
+                .sample(n=len(current_df), random_state=42)
+                .set_index("date_sold", drop=True)
+                .sort_index()
+                .round(2),
+                current_data=scale_prices(current_df)
+                .set_index("date_sold", drop=True)
+                .sort_index()
+                .round(2),
+                column_mapping=column_map,
+            )
+
+            report_path = os.path.join(report_dir, f"{report_name}_report.html")
+
+            dashboard.save(report_path)
+            logger.info(f"Generated new Evidently report: {report_path}")
