@@ -47,7 +47,6 @@ STATIC_PATH = "apps/static"
 TEMPLATE_PATH = "apps/templates"
 
 app = Flask(__name__, static_folder=STATIC_PATH, template_folder=TEMPLATE_PATH)
-# app = Flask(__name__)
 
 
 @app.route("/")
@@ -66,5 +65,4 @@ def get_report_dates():
 
 
 if __name__ == "__main__":
-    # app.run(host="127.0.0.1", debug=True)
     app.run(host="127.0.0.1", port=os.environ.get("CDSW_READONLY_PORT"))
