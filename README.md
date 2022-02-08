@@ -2,7 +2,7 @@
 
 A demonstration of how to perform continuous model monitoring on Cloudera Machine Learning (CML) using the [Model Metrics](https://docs.cloudera.com/machine-learning/cloud/model-metrics/topics/ml-enabling-model-metrics.html) feature and [Evidently.ai's](https://evidentlyai.com/) open-source monitoring dashboards.
 
-![](data/images/evidently_ai_logo_fi.png)
+![](data/images/price_regressor_monitoring_dashboard.png)
 
 After iterations of development and testing, deploying a well-fit machine learning model often feels like the final hurdle for an eager data science team. In practice, however, a trained model is never final, and this milestone marks just the beginnning of a new chapter in the ML lifecycle called production ML. This is because most machine learning models are static, but the world we live in is dynamically changing all the time. Changes in environmental conditions like these are referred to as _concept drift,_ and will cause the predictive performance of a model to degrade over time, eventually making it obsolete for the task it was initially intended to solve.
 
@@ -11,6 +11,8 @@ After iterations of development and testing, deploying a well-fit machine learni
 > [FF22: Inferring Concept Drift Without Labeled Data](https://concept-drift.fastforwardlabs.com/)
 
 To combat concept drift in production systems, its important to have robust monitoring capabilities that alert stakeholders when relationships in the incoming data or model have changed. In this Applied Machine Learning Prototype (AMP), we demonstrate how this can be achieved on CML. Specifically, we leverage CML's [Model Metrics](https://docs.cloudera.com/machine-learning/cloud/model-metrics/topics/ml-enabling-model-metrics.html) feature in combination with Evidently.ai's [Data Drift](https://docs.evidentlyai.com/reports/data-drift), [Numerical Target Drift](https://docs.evidentlyai.com/reports/num-target-drift), and [Regression Performance](https://docs.evidentlyai.com/reports/reg-performance) reports to monitor a simulated production model that predicts [housing prices](https://www.kaggle.com/harlfoxem/housesalesprediction) over time.
+
+![](data/images/evidently_ai_logo_fi.png)
 
 ## Project Structure
 
@@ -49,11 +51,9 @@ By launching this AMP on CML, the following steps will be taken to recreate the 
 5. A [simulation](src/simulation.py) is run in that iterates over the production dataset in monthly batches. For each new month of production data (of which there are six total), the simulation will:
    - Lookup newly _listed_ properties from the batch and predict their sale prices using the deployed model
    - Lookup newly _sold_ properties from the batch and track their ground truth values by joining to original prediction record in the metric store
-   - Calculate drift metrics and deploy a refreshed, Evidently monitoring dashboard via a [CML Application](https://docs.cloudera.com/machine-learning/cloud/applications/topics/ml-applications-c.html) 
+   - Calculate drift metrics and deploy a set of refreshed Evidently monitoring reports via a [CML Application](https://docs.cloudera.com/machine-learning/cloud/applications/topics/ml-applications-c.html) 
 
-Upon succesful recreation of the project (which may take ~20 minutes), the simulation will have produced six monitoring reports - one for each month of "production" records - and saved those reports to the `apps/reports/` directory. Each report consists of three Evidently report tabs (data drift, target drift, and regression performance) that are combined into a single application that you can access directly via the Applications pane in CML to determine if and where drift is occuring within the new batch of data. We encourage users to peruse the [simulation logic and documentation](src/simulation.py) directly for a detailed look at how new records are scored, logged, and queried to generate monitoring reports.
-
-> NOTE: Since the simulation is intended to mimic a production scenario, the deployed application is refreshed *in-place* with results from each new batch of data. Therefore, only the most recent month's drift report is displayed at any given time. You can inspect the deployed application while the simulation is running see month-to-month changes in the drift reports.
+Upon succesful recreation of the project (which may take ~20 minutes), the simulation will have produced 6 sets of monitoring reports - three for each month of "production" records - and saved those reports to the `apps/static/reports/` directory.  Reports should be accessed via the custom dashboard running as an Application in CML and can be used to determine if and where drift is occuring within each new batch of data. We encourage users to peruse the [simulation logic and documentation](src/simulation.py) directly for a detailed look at how new records are scored, logged, and queried to generate monitoring reports. Since the simulation is intended to mimic a production scenario, the deployed application is refreshed *in-place* with results from each new batch of data.
 
 ## Launching the Project on CML
 
