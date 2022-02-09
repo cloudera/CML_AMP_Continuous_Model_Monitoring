@@ -1,0 +1,117 @@
+<!--
+* ****************************************************************************
+*
+* CLOUDERA APPLIED MACHINE LEARNING PROTOTYPE (AMP)
+* (C) Cloudera, Inc. 2021
+* All rights reserved.
+*
+* Applicable Open Source License: Apache 2.0
+*
+* NOTE: Cloudera open source products are modular software products
+* made up of hundreds of individual components, each of which was
+* individually copyrighted. Each Cloudera open source product is a
+* collective work under U.S. Copyright Law. Your license to use the
+* collective work is as provided in your written agreement with
+* Cloudera. Used apart from the collective work, this file is
+* licensed for your use pursuant to the open source license
+* identified above.
+*
+* This code is provided to you pursuant a written agreement with
+* (i) Cloudera, Inc. or (ii) a third-party authorized to distribute
+* this code. If you do not have a written agreement with Cloudera nor
+* with an authorized and properly licensed third party, you do not
+* have any rights to access nor to use this code.
+*
+* Absent a written agreement with Cloudera, Inc. (“Cloudera”) to the
+* contrary, A) CLOUDERA PROVIDES THIS CODE TO YOU WITHOUT WARRANTIES OF ANY
+* KIND; (B) CLOUDERA DISCLAIMS ANY AND ALL EXPRESS AND IMPLIED
+* WARRANTIES WITH RESPECT TO THIS CODE, INCLUDING BUT NOT LIMITED TO
+* IMPLIED WARRANTIES OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY AND
+* FITNESS FOR A PARTICULAR PURPOSE; (C) CLOUDERA IS NOT LIABLE TO YOU,
+* AND WILL NOT DEFEND, INDEMNIFY, NOR HOLD YOU HARMLESS FOR ANY CLAIMS
+* ARISING FROM OR RELATED TO THE CODE; AND (D)WITH RESPECT TO YOUR EXERCISE
+* OF ANY RIGHTS GRANTED TO YOU FOR THE CODE, CLOUDERA IS NOT LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE OR
+* CONSEQUENTIAL DAMAGES INCLUDING, BUT NOT LIMITED TO, DAMAGES
+* RELATED TO LOST REVENUE, LOST PROFITS, LOSS OF INCOME, LOSS OF
+* BUSINESS ADVANTAGE OR UNAVAILABILITY, OR LOSS OR CORRUPTION OF
+* DATA.
+*
+* ***************************************************************************
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/cldr-favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bs-custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    
+    <title>Continuous Model Monitoring Dashboard</title>
+</head>
+<body>
+    <nav id="mainNavbar" class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="https://www.cloudera.com/products/fast-forward-labs-research.html" target="_blank" rel="noopener noreferrer">
+            <img src="{{ url_for('static', filename='images/cloudera-fast-forward.png') }}" alt="" width="300" class="d-inline-block align-text-top">
+          </a>
+          <a class="nav-link" href="https://github.com/cloudera/CML_AMP_Continuous_Model_Monitoring.git" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github"></i> Github
+          </a>
+        </div>
+      </nav>
+
+    <section id="headingSection" class="container">
+      <div class="row justify-content-center">
+        <div class="col-10">
+          <h1 class='display-2 text-center text-primary my-3'>Price Regressor Monitoring</h1>
+          <p class='text-center blurb'>To combat concept drift in production machine learning systems, it’s important to have robust
+              monitoring capabilities that alert stakeholders when relationships in the incoming data or model have changed. The 
+              visualizations displayed below are powered by <i><b><a href='https://evidentlyai.com/'>Evidently.ai’s</a></b></i> visual reports — enabling users to automatically monitor 
+              the health of the deployed Price Regression system for data drift, numerical target drift, and regression performance 
+              on a periodic basis by comparing statistical measures between the training dataset and each incoming month of production data.</p>
+          <h2 class="text-center">
+            <i class="bi bi-arrow-down-circle"></i>
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div id="reportControls" class="row py-3">
+          <div class="col-4">
+            <select id=dateRangeSelector class="form-select" aria-label="Select Date Range"></select>
+          </div>
+          <div class="col-8">
+            <ul id="reportTabSelector" class="nav nav-pills justify-content-end" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" type="button" data-bs-toggle="pill" aria-current="page" value='data_drift_report.html'>Data Drift</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" type="button"  data-bs-toggle="pill" value='num_target_drift_report.html'>Numerical Target Drift</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" type="button" data-bs-toggle="pill" value='reg_performance_report.html'>Regression Performance</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+      <div id="reportDisplay" class="row">
+        <div id=iframeCol class="col px-0">
+          <div class="embed-responsive embed-responsive-1by1">
+            <iframe class="embed-responsive-item ratio" src=""></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

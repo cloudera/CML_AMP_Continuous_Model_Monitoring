@@ -39,17 +39,29 @@
 # ###########################################################################
 
 import os
-from flask import Flask
+from datetime import datetime
+from flask import Flask, render_template, jsonify
 
-from src.utils import find_latest_report
 
-app = Flask(__name__, static_folder="apps/reports", static_url_path="")
+STATIC_PATH = "apps/static"
+TEMPLATE_PATH = "apps/templates"
+
+app = Flask(__name__, static_folder=STATIC_PATH, template_folder=TEMPLATE_PATH)
 
 
 @app.route("/")
-def report():
-    latest_report = find_latest_report(report_dir="apps/reports/")
-    return app.send_static_file(latest_report)
+def hello_world():
+    return render_template("index.html")
+
+
+@app.route("/get_report_dates", methods=["GET"])
+def get_report_dates():
+    report_dates = sorted(
+        os.listdir(os.path.join(STATIC_PATH, "reports")),
+        key=lambda date: datetime.strptime(date.split("_")[0], "%m-%d-%Y"),
+        reverse=True,
+    )
+    return jsonify(report_dates)
 
 
 if __name__ == "__main__":

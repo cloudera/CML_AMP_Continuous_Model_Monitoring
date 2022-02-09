@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 # AMP
-data/working/*
-apps/reports/*
+data/working/
+apps/static/reports/
 
