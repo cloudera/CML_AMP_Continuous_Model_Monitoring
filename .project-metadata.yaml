@@ -9,10 +9,10 @@ date: "2021-12-01"
 
 environment_variables:
   DEV_MODE:
-    default: false
+    default: False
     description: >-
       Flag to indicate if the AMP should run on a 5% sample of the dataset 
-      (true) to facilitate efficient project development or the full dataset (false).
+      (True) to facilitate efficient project development or the full dataset (False).
     # required: True
 
 feature_dependencies:
