@@ -1,7 +1,7 @@
+evidently==0.1.32.dev0
 pandas
 numpy
 scikit-learn
-evidently==0.1.32.dev0
 flask
 tqdm
 -e .
