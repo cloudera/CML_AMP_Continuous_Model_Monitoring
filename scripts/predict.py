@@ -73,7 +73,6 @@ def predict(data_input):
     df = df[col_order].drop("price", axis=1)
 
     # Log raw input values of features used in inference pipeline
-    # active_features = get_active_feature_names(model.named_steps["preprocess"]) # feature not compatible with Python 3.6
     active_features = [
         "bedrooms",
         "bathrooms",
