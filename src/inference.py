@@ -38,9 +38,11 @@
 #
 # ###########################################################################
 
+import os
 import time
 import cdsw
 import json
+import urllib
 import requests
 import concurrent
 import threading
@@ -63,8 +65,20 @@ class ThreadedModelRequest:
     def __init__(self, deployment_details, n_threads=2):
         self.n_threads = n_threads
         self.deployment_details = deployment_details
-        self.model_service_url = cdsw._get_model_call_endpoint()
+        self.model_service_url = self.get_model_call_endpoint()
         self.thread_local = threading.local()
+
+    def get_model_call_endpoint(self):
+        """
+        Return the monitoring service URL.
+        """
+        api_url = os.environ.get("CDSW_API_URL")
+
+        if api_url is None:
+            raise RuntimeError("Environmental variable CDSW_API_URL must be set.")
+
+        parsed = urllib.parse.urlparse(api_url)
+        return parsed.scheme + "://modelservice." + parsed.netloc + "/model"
 
     def get_session(self):
         if not hasattr(self.thread_local, "session"):
