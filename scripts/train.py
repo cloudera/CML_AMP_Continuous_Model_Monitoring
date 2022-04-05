@@ -96,7 +96,7 @@ gscv = GridSearchCV(
     param_grid={"model__regressor__alpha": np.arange(0.1, 1, 0.1)},
     cv=5,
     scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=1,
 )
 
 gscv.fit(X_train, y_train)
