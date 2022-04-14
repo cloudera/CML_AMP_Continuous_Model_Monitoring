@@ -1,7 +1,7 @@
+evidently==0.1.32.dev0
 pandas==1.1.5
 numpy==1.19.5
 scikit-learn==0.23.2
-evidently==0.1.32.dev0
-flask==1.1.4
-tqdm==4.62.3
+flask==2.1.1
+tqdm==4.63.1
 -e .
