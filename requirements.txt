@@ -1,4 +1,4 @@
-evidently==0.1.32.dev0
+evidently==0.1.59.dev0
 pandas==1.1.5
 numpy==1.19.5
 scikit-learn==1.0.1
