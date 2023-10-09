@@ -47,7 +47,7 @@ from typing import Dict
 from tqdm import tqdm
 from pandas.tseries.offsets import DateOffset
 from evidently.dashboard import Dashboard
-from evidently.tabs import (
+from evidently.dashboard.tabs import (
     DataDriftTab,
     NumTargetDriftTab,
     RegressionPerformanceTab,
