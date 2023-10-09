@@ -441,9 +441,9 @@ class Simulation:
         os.makedirs(report_dir, exist_ok=True)
 
         reports = [
-            ("data_drift", DataDriftTab),
-            ("num_target_drift", NumTargetDriftTab),
-            ("reg_performance", RegressionPerformanceTab),
+            ("data_drift", DataDriftTab()),
+            ("num_target_drift", NumTargetDriftTab()),
+            ("reg_performance", RegressionPerformanceTab()),
         ]
 
         for report_name, tab in reports:
