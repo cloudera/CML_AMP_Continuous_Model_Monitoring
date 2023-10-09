@@ -431,7 +431,6 @@ class Simulation:
             "prediction": PREDICTION,
             "numerical_features": NUM_FEATURES,
             "categorical_features": CAT_FEATURES,
-            "datetime": None,
         }
 
         report_dir = os.path.join(
