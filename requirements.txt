@@ -4,4 +4,5 @@ numpy==1.19.5
 scikit-learn==0.23.2
 flask==2.1.1
 tqdm==4.63.1
+Cython==0.29.36
 -e .
