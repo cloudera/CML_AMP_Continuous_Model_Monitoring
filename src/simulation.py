@@ -427,13 +427,6 @@ class Simulation:
             "bathrooms",
         ]
 
-        # column_mapping = {
-        #     "target": TARGET,
-        #     "prediction": PREDICTION,
-        #     "numerical_features": NUM_FEATURES,
-        #     "categorical_features": CAT_FEATURES,
-        #     "datetime": None,
-        # }
         column_mapping = ColumnMapping()
 
         column_mapping.target = TARGET
