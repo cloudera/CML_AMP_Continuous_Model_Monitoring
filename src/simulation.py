@@ -439,7 +439,7 @@ class Simulation:
         column_mapping.target = TARGET
         column_mapping.prediction = PREDICTION
 
-        column_mapping.numerical_feature = NUM_FEATURES
+        column_mapping.numerical_features = NUM_FEATURES
         column_mapping.categorical_features = CAT_FEATURES
         column_mapping.datetime = None
 
