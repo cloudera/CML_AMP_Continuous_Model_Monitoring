@@ -46,6 +46,7 @@ import pandas as pd
 from typing import Dict
 from tqdm import tqdm
 from pandas.tseries.offsets import DateOffset
+from evidently import ColumnMapping
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import (
     DataDriftTab,
@@ -426,13 +427,21 @@ class Simulation:
             "bathrooms",
         ]
 
-        column_mapping = {
-            "target": TARGET,
-            "prediction": PREDICTION,
-            "numerical_features": NUM_FEATURES,
-            "categorical_features": CAT_FEATURES,
-            "datetime": None,
-        }
+        # column_mapping = {
+        #     "target": TARGET,
+        #     "prediction": PREDICTION,
+        #     "numerical_features": NUM_FEATURES,
+        #     "categorical_features": CAT_FEATURES,
+        #     "datetime": None,
+        # }
+        column_mapping = ColumnMapping()
+
+        column_mapping.target = TARGET
+        column_mapping.prediction = PREDICTION
+
+        column_mapping.numerical_feature = NUM_FEATURES
+        column_mapping.categorical_features = CAT_FEATURES
+        column_mapping.datetime = None
 
         report_dir = os.path.join(
             "apps/static/reports/",
