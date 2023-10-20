@@ -46,8 +46,9 @@ import pandas as pd
 from typing import Dict
 from tqdm import tqdm
 from pandas.tseries.offsets import DateOffset
+from evidently import ColumnMapping
 from evidently.dashboard import Dashboard
-from evidently.tabs import (
+from evidently.dashboard.tabs import (
     DataDriftTab,
     NumTargetDriftTab,
     RegressionPerformanceTab,
@@ -426,13 +427,12 @@ class Simulation:
             "bathrooms",
         ]
 
-        column_map = {
-            "target": TARGET,
-            "prediction": PREDICTION,
-            "numerical_features": NUM_FEATURES,
-            "categorical_features": CAT_FEATURES,
-            "datetime": None,
-        }
+        column_mapping = ColumnMapping()
+        column_mapping.target = TARGET
+        column_mapping.prediction = PREDICTION
+        column_mapping.numerical_features = NUM_FEATURES
+        column_mapping.categorical_features = CAT_FEATURES
+        column_mapping.datetime = None
 
         report_dir = os.path.join(
             "apps/static/reports/",
@@ -441,9 +441,9 @@ class Simulation:
         os.makedirs(report_dir, exist_ok=True)
 
         reports = [
-            ("data_drift", DataDriftTab),
-            ("num_target_drift", NumTargetDriftTab),
-            ("reg_performance", RegressionPerformanceTab),
+            ("data_drift", DataDriftTab()),
+            ("num_target_drift", NumTargetDriftTab()),
+            ("reg_performance", RegressionPerformanceTab()),
         ]
 
         for report_name, tab in reports:
@@ -460,7 +460,7 @@ class Simulation:
                 .set_index("date_sold", drop=True)
                 .sort_index()
                 .round(2),
-                column_mapping=column_map,
+                column_mapping=column_mapping,
             )
 
             report_path = os.path.join(report_dir, f"{report_name}_report.html")
