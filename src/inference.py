@@ -62,7 +62,7 @@ class ThreadedModelRequest:
 
     """
 
-    def __init__(self, deployment_details, n_threads=2):
+    def __init__(self, deployment_details, n_threads=1):
         self.n_threads = n_threads
         self.deployment_details = deployment_details
         self.model_service_url = self.get_model_call_endpoint()
