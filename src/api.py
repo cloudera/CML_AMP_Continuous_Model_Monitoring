@@ -86,14 +86,15 @@ class ApiUtility:
 
         # gather model details
         models = (
-            self.client.list_models(project_id=project_id, async_req=True)
+            # fetch models for the project, sorting them in descending order by model name.
+            self.client.list_models(project_id=project_id, sort="-name" ,async_req=True)
             .get()
             .to_dict()
         )
         model_info = [
-            model for model in models["models"] if model["name"] == model_name
+            model for model in models["models"] if model["name"].startswith(model_name)
         ][0]
-
+        model_name = model_info["name"]
         model_id = model_info["id"]
         model_crn = model_info["crn"]
         model_access_key = model_info["access_key"]
