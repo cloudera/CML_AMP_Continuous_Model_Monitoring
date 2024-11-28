@@ -19,7 +19,7 @@ feature_dependencies:
   - model_metrics
 
 runtimes:
-  - editor: Workbench
+  - editor: PBJ Workbench
     kernel: Python 3.9
     edition: Standard
 
