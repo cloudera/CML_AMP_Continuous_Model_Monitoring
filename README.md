@@ -27,7 +27,7 @@ To combat concept drift in production systems, its important to have robust moni
 ├── requirements.txt
 ├── scripts
 │   ├── install_dependencies.py         # commands to install python package dependencies
-│   ├── predict.py                      # inference script that utilizes cdsw.model_metrics
+│   ├── predict.py                      # inference script that utilizes cml_model with metrics enabled
 │   ├── prepare_data.py                 # splits raw data into training and production sets
 │   ├── simulate.py                     # script that runs simulated production logic
 │   └── train.py                        # build and train an sklearn pipelne for regression
