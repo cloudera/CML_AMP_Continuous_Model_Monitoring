@@ -39,7 +39,6 @@
 # ###########################################################################
 
 import os
-import cdsw
 import logging
 import numpy as np
 import pandas as pd
@@ -53,6 +52,7 @@ from evidently.dashboard.tabs import (
     NumTargetDriftTab,
     RegressionPerformanceTab,
 )
+import cml.metrics_v1 as metrics
 
 from src.utils import scale_prices
 from src.api import ApiUtility
@@ -271,7 +271,7 @@ class Simulation:
 
     def format_metadata_for_delayed_metrics(self, df, date_range=None, is_train=False):
         """
-        In order to add delayed metrics to the metric store via cdsw.track_delayed_metrics(), we must pass in
+        In order to add delayed metrics to the metric store via metrics.track_delayed_metrics(), we must pass in
         list of metrics to track along with a list of corresponding uuids that the metrics should join to. This
         function curates the relevant metrics/uuids dependent on if metrics are being tracked for the train dataset
         (one time activity) or a batch from the production dataset.
@@ -332,7 +332,7 @@ class Simulation:
             )
 
         for uuid, gt, ds in zip(uuids, ground_truths, sold_dates):
-            cdsw.track_delayed_metrics(
+            metrics.track_delayed_metrics(
                 metrics={"ground_truth": gt, "date_sold": ds}, prediction_uuid=uuid
             )
 
@@ -340,7 +340,7 @@ class Simulation:
 
     def query_model_metrics(self, **kwargs):
         """
-        Use the cdsw.read_metrics() functionality to query saved model metrics from the PostgresSQL database,
+        Use the metrics.read_metrics() functionality to query saved model metrics from the PostgresSQL database,
         and return details in formatted dataframe
 
         Query metrics for the model deployment saved in self.latest_deployment_details. Optionally, can pass
@@ -356,7 +356,7 @@ class Simulation:
         if kwargs:
             ipt.update(kwargs)
 
-        return self.format_model_metrics_query(cdsw.read_metrics(**ipt))
+        return self.format_model_metrics_query(metrics.read_metrics(**ipt))
 
     @staticmethod
     def sample_dataframe(df, fraction):
@@ -385,7 +385,7 @@ class Simulation:
     @staticmethod
     def format_model_metrics_query(metrics: Dict):
         """
-        Accepts the response dictionary from `cdsw.read_metrics()`, filters out any non-"metrics" columns,
+        Accepts the response dictionary from `metrics.read_metrics()`, filters out any non-"metrics" columns,
         and formats as Dataframe.
 
         Args:
