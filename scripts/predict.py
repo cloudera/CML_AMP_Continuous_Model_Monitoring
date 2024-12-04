@@ -65,7 +65,7 @@ with open("model.pkl", "rb") as f:
 # }
 
 
-@metrics.model_metrics
+@models.cml_model(metrics=True)
 @models.cml_model
 def predict(data_input):
 
