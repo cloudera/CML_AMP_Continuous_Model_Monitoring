@@ -42,19 +42,20 @@
 # and define a function that uses the model to make inference
 
 # This version of the predict function is wrapped with the
-# model_metrics decorator, enabling it to call .track_metrics()
+# cml_model decorator, enabling it to call .track_metrics()
 # to store mathematical metrics associated with each prediction
 
-import cdsw
 import pickle
 import pandas as pd
+import cml.models_v1 as models
+import cml.metrics_v1 as metrics
 
 from src.utils import col_order
 
 with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
-# The model_metrics decorator equips the predict function to
+# The cml_model decorator equips the predict function to
 # call .track_metrics(). It also changes the return type. If the
 # raw predict function returns a value "result", the wrapped
 # function will return eg
@@ -64,7 +65,7 @@ with open("model.pkl", "rb") as f:
 # }
 
 
-@cdsw.model_metrics
+@models.cml_model(metrics=True)
 def predict(data_input):
 
     # Convert dict representation back to dataframe for inference
@@ -84,7 +85,7 @@ def predict(data_input):
         "condition",
         "view",
     ]
-    cdsw.track_metric(
+    metrics.track_metric(
         "input_features", df[active_features].to_dict(orient="records")[0]
     )
 
@@ -92,6 +93,6 @@ def predict(data_input):
     result = model.predict(df).item()
 
     # Log the prediction
-    cdsw.track_metric("predicted_result", result)
+    metrics.track_metric("predicted_result", result)
 
     return result

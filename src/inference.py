@@ -40,12 +40,12 @@
 
 import os
 import time
-import cdsw
 import json
 import urllib
 import requests
 import concurrent
 import threading
+import cml.models_v1 as models
 
 
 class ThreadedModelRequest:
@@ -117,7 +117,7 @@ class ThreadedModelRequest:
         Not Implemented - currently performs 42% slower than call_model.
         """
 
-        response = cdsw.call_model(
+        response = models.call_model(
             model_access_key=self.deployment_details["model_access_key"],
             ipt={"record": record},
         )
