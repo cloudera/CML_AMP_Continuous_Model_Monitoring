@@ -114,7 +114,7 @@ def outlier_removal(X, multiple, cols):
         lower = q1 - (multiple * iqr)
         upper = q3 + (multiple * iqr)
 
-        X.loc[~X.loc[:, col].between(lower, upper, inclusive=True), col] = np.nan
+        X.loc[~X.loc[:, col].between(lower, upper, inclusive="both"), col] = np.nan
 
     return X[~X.isna().any(axis=1)]
 

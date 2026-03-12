@@ -245,12 +245,11 @@ class Simulation:
         """
 
         # find total number of months in prod set
-        total_months = int(
-            np.ceil(
-                (prod_df.date_sold.max() - prod_df.date_sold.min())
-                / np.timedelta64(1, "M")
-            )
-        )
+        month_span = (
+            pd.to_datetime(prod_df.date_sold.max()).to_period("M")
+            - pd.to_datetime(prod_df.date_sold.min()).to_period("M")
+        ).n
+        total_months = max(1, month_span + 1)
 
         # construct date ranges to iterate through as simulation of time (include left, exclude right)
         date_ranges = [

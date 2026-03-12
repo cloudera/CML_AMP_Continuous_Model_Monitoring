@@ -70,7 +70,7 @@ num_pipe = Pipeline(
 cat_pipe = Pipeline(
     steps=[
         ("impute", SimpleImputer(strategy="most_frequent")),
-        ("one-hot", OneHotEncoder(handle_unknown="ignore", sparse=False)),
+        ("one-hot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
     ]
 )
 

@@ -20,7 +20,7 @@ feature_dependencies:
 
 runtimes:
   - editor: PBJ Workbench
-    kernel: Python 3.9
+    kernel: Python 3.12
     edition: Standard
 
 tasks:

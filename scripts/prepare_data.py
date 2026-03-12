@@ -72,7 +72,7 @@ train_df = df[
 ].sort_values("date_sold")
 
 prod_df = df[
-    df.date_sold.between("2014-10-31", max_sold_date, inclusive=False)
+    df.date_sold.between("2014-10-31", max_sold_date, inclusive="neither")
 ].sort_values("date_sold")
 
 # Save off these dataframes

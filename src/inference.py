@@ -107,7 +107,7 @@ class ThreadedModelRequest:
         response = session.post(
             url=self.model_service_url,
             headers=headers,
-            data=json.dumps(data),
+            data=json.dumps(data, default=str),
         ).json()
 
         return record["id"], response["response"]["uuid"]

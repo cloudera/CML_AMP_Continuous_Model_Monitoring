@@ -143,7 +143,7 @@ class ApiUtility:
 
         try:
             runtime_criteria = {
-                "kernel": "Python 3.9",
+                "kernel": "Python 3.12",
                 "edition": "Standard",
                 "editor": "Workbench",
             }
